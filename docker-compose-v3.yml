@@ -1,14 +1,14 @@
 version: '3'
 
 services:
-  namenode:
+  ulake-Hnamenode:
     image: bde2020/hadoop-namenode:2.0.0-hadoop3.2.1-java8
     networks:
-      - hbase
+      - ulake-network
     volumes:
       - namenode:/hadoop/dfs/name
     environment:
-      - CLUSTER_NAME=test
+      - CLUSTER_NAME=ulake-hadoop
     env_file:
       - ./hadoop.env
     deploy:
@@ -23,16 +23,16 @@ services:
         traefik.docker.network: hbase
         traefik.port: 50070
 
-  datanode:
+  ulake-Hdatanode:
     image: bde2020/hadoop-datanode:2.0.0-hadoop3.2.1-java8
     networks:
-      - hbase
+      - ulake-network
     volumes:
       - datanode:/hadoop/dfs/data
     env_file:
       - ./hadoop.env
     environment:
-      SERVICE_PRECONDITION: "namenode:50070"
+      SERVICE_PRECONDITION: "ulake-Hnamenode:50070"
     deploy:
       mode: global
       restart_policy:
@@ -41,12 +41,12 @@ services:
         traefik.docker.network: hbase
         traefik.port: 50075
 
-  resourcemanager:
+  ulake-Hresourcemanager:
     image: bde2020/hadoop-resourcemanager:2.0.0-hadoop3.2.1-java8
     networks:
-      - hbase
+      - ulake-network
     environment:
-      SERVICE_PRECONDITION: "namenode:50070 datanode:50075"
+      SERVICE_PRECONDITION: "ulake-Hnamenode:50070 ulake-Hdatanode:50075"
     env_file:
       - ./hadoop.env
     deploy:
@@ -63,12 +63,12 @@ services:
     healthcheck:
       disable: true
 
-  nodemanager:
+  ulake-Hnodemanager:
     image: bde2020/hadoop-nodemanager:2.0.0-hadoop3.2.1-java8
     networks:
-      - hbase
+      - ulake-network
     environment:
-      SERVICE_PRECONDITION: "namenode:50070 datanode:50075 resourcemanager:8088"
+      SERVICE_PRECONDITION: "ulake-Hnamenode:50070 ulake-Hdatanode:50075 ulake-Hresourcemanager:8088"
     env_file:
       - ./hadoop.env
     deploy:
@@ -79,14 +79,14 @@ services:
         traefik.docker.network: hbase
         traefik.port: 8042
 
-  historyserver:
+  ulake-Hhistoryserver:
     image: bde2020/hadoop-historyserver:2.0.0-hadoop3.2.1-java8
     networks:
-      - hbase
+      - ulake-network
     volumes:
       - hadoop_historyserver:/hadoop/yarn/timeline
     environment:
-      SERVICE_PRECONDITION: "namenode:50070 datanode:50075 resourcemanager:8088"
+      SERVICE_PRECONDITION: "ulake-Hnamenode:50070 ulake-Hdatanode:50075 ulake-Hresourcemanager:8088"
     env_file:
       - ./hadoop.env
     deploy:
@@ -105,6 +105,6 @@ volumes:
   hadoop_historyserver:
 
 networks:
-  hbase:
+  ulake-network:
     external:
-      name: hbase
+      name: ulake-network
