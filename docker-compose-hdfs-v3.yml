@@ -18,7 +18,7 @@ services:
         condition: on-failure
       placement:
         constraints:
-          - node.hostname == akswnc4.aksw.uni-leipzig.de
+          - node.hostname == ictserver9
 
   ulake-Hdatanode:
     image: bde2020/hadoop-datanode:2.0.0-hadoop3.2.1-java8
