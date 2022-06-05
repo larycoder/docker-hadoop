@@ -1,7 +1,7 @@
 version: "3"
 
 services:
-  namenode:
+  ulake-Hnamenode:
     image: bde2020/hadoop-namenode:2.0.0-hadoop3.2.1-java8
     container_name: ulake-Hnamenode
     restart: always
@@ -15,7 +15,7 @@ services:
     env_file:
       - ./hadoop.env
 
-  datanode:
+  ulake-Hdatanode:
     image: bde2020/hadoop-datanode:2.0.0-hadoop3.2.1-java8
     container_name: ulake-Hdatanode
     restart: always
@@ -26,7 +26,7 @@ services:
     env_file:
       - ./hadoop.env
 
-  resourcemanager:
+  ulake-Hresourcemanager:
     image: bde2020/hadoop-resourcemanager:2.0.0-hadoop3.2.1-java8
     container_name: ulake-Hresourcemanager
     restart: always
@@ -35,7 +35,7 @@ services:
     env_file:
       - ./hadoop.env
 
-  nodemanager1:
+  ulake-Hnodemanager1:
     image: bde2020/hadoop-nodemanager:2.0.0-hadoop3.2.1-java8
     container_name: ulake-Hnodemanager
     restart: always
@@ -44,7 +44,7 @@ services:
     env_file:
       - ./hadoop.env
 
-  historyserver:
+  ulake-Hhistoryserver:
     image: bde2020/hadoop-historyserver:2.0.0-hadoop3.2.1-java8
     container_name: ulake-Hhistoryserver
     restart: always
