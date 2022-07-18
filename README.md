@@ -18,7 +18,7 @@ cd ./deployment && ./start-namenode.sh
 2. Boot up datanode cluster
 
 ```
-docker stack deploy -c ./docker-compose-hdfs-v4.yml ulake-hadoop
+docker stack deploy -c ./docker-compose-hdfs-v3.yml ulake-hadoop
 ```
 
 3. If datanode and namenode clusterID miss match, then clear docker volume
