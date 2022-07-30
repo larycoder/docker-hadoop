@@ -15,10 +15,18 @@ For deploying hdfs cluster on docker swarm:
 cd ./deployment && ./start-namenode.sh
 ```
 
-2. Boot up datanode cluster
+2. Boot up datanode
+
+- Boot service in cluster (unstable)
 
 ```
 docker stack deploy -c ./docker-compose-hdfs-v3.yml ulake-hadoop
+```
+
+- Boot manually on each node (stable)
+
+```
+cd ./deployment && ./start-datanode.sh <host_name>
 ```
 
 3. If datanode and namenode clusterID miss match, then clear docker volume
