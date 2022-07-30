@@ -3,9 +3,10 @@
 # Node: namenode must be available
 # Node: volume must be available
 
+HOST="$1"
+STATIC_IP="$2"
 ENV_FILE="../hadoop.env"
 NAMENODE="hdfs://ulake-Hnamenode:9000"
-HOST="$1"
 PORT=9864
 NET="ulake-network"
 VOLUME="/home/hieplnc/Desktop/ulake/deployment/data/hdfs"
@@ -18,4 +19,5 @@ docker run --name $HOST \
     -v $VOLUME:/hadoop/dfs/data \
     -p $PORT:$PORT \
     --network $NET \
+    --ip $STATIC_IP \
     -d bde2020/hadoop-datanode:2.0.0-hadoop3.2.1-java8
